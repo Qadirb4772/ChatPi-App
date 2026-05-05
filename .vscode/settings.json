@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "/home/qadir/Documents/OOP/TheChatPiApp/mysql-connector-j_9.6.0-1ubuntu24.04_all/usr/share/java/mysql-connector-j-9.6.0.jar"
+    ],
+    "java.project.sourcePaths": [
+        "."
+    ]
+}
