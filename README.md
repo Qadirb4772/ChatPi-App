@@ -271,9 +271,12 @@ Stores user account information.
 ```sql
 Users(
     user_id,
+    first_name,
+    last_name,
     username,
     email,
-    password
+    phone_number
+    password (encrypted)
 )
 ```
 
@@ -298,10 +301,10 @@ Stores messages sent in chats.
 ```sql
 Messages(
     message_id,
-    sender_id,
-    chat_id,
-    message_text,
-    sent_at
+    sender,
+    receiver,
+    message,
+    sent_at (TIMESTAMP)
 )
 ```
 
