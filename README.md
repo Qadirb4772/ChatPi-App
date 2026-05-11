@@ -310,18 +310,6 @@ Messages(
 
 ---
 
-## User_Chat Table
-Maintains many-to-many relationship between users and chats.
-
-```sql
-User_Chat(
-    user_id,
-    chat_id
-)
-```
-
----
-
 # How to Run the Project
 
 ## Software Requirements
