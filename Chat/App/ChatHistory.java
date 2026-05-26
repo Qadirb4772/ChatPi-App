@@ -1,7 +1,5 @@
 package Chat.App;
 
-// import Chat.DB.*;
-
 import JDBC.JavaDatabaseConnectivity;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
