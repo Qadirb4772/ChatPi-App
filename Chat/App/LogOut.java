@@ -6,10 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 import PkgGUI.WelcomeScreen;
+import PkgGUI.LogIn;
+
 public class LogOut {
 
     // ================= LOGOUT LOGIC =================
     public static void performLogout(String username) {
+        
         Connection conn = DBConnection.getConnection();
 
         // Update last_logout timestamp in DB if table exists
@@ -98,17 +101,22 @@ public class LogOut {
             // ---- Actions ----
             logoutBtn.addActionListener(e -> {
                 String username = usernameField.getText().trim();
+                
                 if (username.isEmpty()) {
                     JOptionPane.showMessageDialog(this,
                             "Please enter your username.", "Warning",
                             JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                performLogout(username);
-                JOptionPane.showMessageDialog(this,
+                if(username.equals(LogIn.getUsername())){
+                    performLogout(username);
+                    JOptionPane.showMessageDialog(this,
                         "You have been logged out successfully.",
                         "Logout", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Please Enter Your valid Username");
+                }
             });
 
             cancelBtn.addActionListener(e -> dispose());

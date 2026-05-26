@@ -2,8 +2,11 @@ package JDBC;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.Statement;
+
 
 public class InsertionInDB extends JavaDatabaseConnectivity{
     public InsertionInDB(){
@@ -50,7 +53,7 @@ public class InsertionInDB extends JavaDatabaseConnectivity{
             PreparedStatement pstmt = conn.prepareStatement(userMsgQuery);
             pstmt.setString(1, chatName);
             pstmt.setBoolean(2, isGrouped);
-            int rowsAffected = pstmt.executeUpdate();
+            pstmt.executeUpdate();
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e.getMessage());
         }finally{
@@ -58,5 +61,38 @@ public class InsertionInDB extends JavaDatabaseConnectivity{
         }
      }
 
-    
+     public static int createOrGetChat(String groupName) {
+        int chatId = -1;
+
+        Connection conn = JavaDatabaseConnectivity.getConnection();
+        if (conn == null) return -1;
+
+       try {
+            String checkSql = "SELECT chat_id FROM Chats WHERE chat_name = ?";
+            PreparedStatement ps = conn.prepareStatement(checkSql);
+            ps.setString(1, groupName);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                chatId = rs.getInt("chat_id");
+            } else {
+                String insertSql = "INSERT INTO Chats (chat_name, created_at, is_Grouped) VALUES (?, NOW(), 1)";
+                PreparedStatement insertPs = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+
+                insertPs.setString(1, groupName);
+                insertPs.executeUpdate();
+
+                ResultSet keys = insertPs.getGeneratedKeys();
+                if (keys.next()) {
+                    chatId = keys.getInt(1);
+                }
+            }
+
+        } catch (SQLException e) {
+                e.printStackTrace();
+        }
+
+    return chatId; //
+    }    
 }

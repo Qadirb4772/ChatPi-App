@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
-
+import JDBC.Searching;
 public class GroupChat {
 
     JFrame frame;
@@ -195,26 +195,35 @@ public class GroupChat {
 
     // ================= NAME INPUT DIALOG =================
     public static String getName(int num) {
-        return JOptionPane.showInputDialog("Enter name for Person " + num);
+        return JOptionPane.showInputDialog("Enter username for Person " + num);
     }
 
     // ================= LAUNCH =================
     public static void launch() {
         String n1 = LogIn.getUsername();
-        String n2 = getName(2);
-        String n3 = getName(3);
-        String n4 = getName(4);
+        String n2 = getName(1);
+        String n3 = getName(2);
+        String n4 = getName(3);
 
-        String group = "Main Group";
 
-        GroupChat p1 = new GroupChat(n1, group, 50,  50);
-        GroupChat p2 = new GroupChat(n2, group, 550, 50);
-        GroupChat p3 = new GroupChat(n3, group, 50,  700);
-        GroupChat p4 = new GroupChat(n4, group, 550, 700);
+        if(Searching.isPresent(n4) && Searching.isPresent(n3) && Searching.isPresent(n2)){
+            String group = JOptionPane.showInputDialog("Enter Group Name: ");
 
-        p1.addMember(p2); p1.addMember(p3); p1.addMember(p4);
-        p2.addMember(p1); p2.addMember(p3); p2.addMember(p4);
-        p3.addMember(p1); p3.addMember(p2); p3.addMember(p4);
-        p4.addMember(p1); p4.addMember(p2); p4.addMember(p3);
+            GroupChat p1 = new GroupChat(n1, group, 50,  50);
+            GroupChat p2 = new GroupChat(n2, group, 550, 50);
+            GroupChat p3 = new GroupChat(n3, group, 50,  700);
+            GroupChat p4 = new GroupChat(n4, group, 550, 700);
+
+            p1.addMember(p2); p1.addMember(p3); p1.addMember(p4);
+            p2.addMember(p1); p2.addMember(p3); p2.addMember(p4);
+            p3.addMember(p1); p3.addMember(p2); p3.addMember(p4);
+            p4.addMember(p1); p4.addMember(p2); p4.addMember(p3);
+        }else if(!(Searching.isPresent(n4))){
+            JOptionPane.showMessageDialog(null, n4+" is not a valid username");
+        }else if(!(Searching.isPresent(n3))){
+            JOptionPane.showMessageDialog(null, n3 +" is not a valid username");
+        }else{
+            JOptionPane.showMessageDialog(null, n2 + " is not a valid username");
+        }
     }
 }

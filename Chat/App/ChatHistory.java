@@ -1,8 +1,7 @@
 package Chat.App;
 
-import Chat.DB.*;
+// import Chat.DB.*;
 
-import JDBC.DataRetrieval;
 import JDBC.JavaDatabaseConnectivity;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,29 +11,22 @@ import java.sql.*;
 public class ChatHistory {
 
     // ================= SAVE MESSAGE TO DB =================
-    public static void saveMessage(String sender, String receiver, String message) {
-        int user1Id = DataRetrieval.getUserId(sender);
-        int user2Id = DataRetrieval.getUserId(receiver);
-
-        
-
-
+    public static void saveMessage(String sender, String receiver, String message) {    
 
         Connection conn = JavaDatabaseConnectivity.getConnection();
         if (conn == null) return;
 
-        String query = "SELECT * FROM ChatParticipants WHERE user_id IN (?,?)";
-        String sql = "INSERT INTO Messages (user_id, chat_id, message, sent_at) " +
-                     "VALUES (?, ?, ?, NOW())";
-        try (PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setInt(1, user1Id);
-            ps.setInt(2, user2Id);
-            // ps.setString(3, message);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                
-            }
-        } catch (SQLException e) {
+
+        String sql = "insert into chat_history" +
+                      "(sender, receiver, message) values (?, ?, ?);";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, sender);
+            ps.setString(2, receiver);
+            ps.setString(3, message);
+            
+            ps.executeUpdate();
+        } 
+        catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
                     "Failed to save message!\n" + e.getMessage(),
                     "DB Error", JOptionPane.ERROR_MESSAGE);
@@ -47,7 +39,7 @@ public class ChatHistory {
     public static String[][] getChatHistory(String person1, String person2) {
         String[][] messages = new String[1000][4]; // Max 1000 messages
         int count = 0;
-        Connection conn = DBConnection.getConnection();
+        Connection conn = JavaDatabaseConnectivity.getConnection();
         if (conn == null) return new String[0][0];
 
         String sql = "SELECT sender, receiver, message, sent_at " +
@@ -89,7 +81,7 @@ public class ChatHistory {
     public static String[] getAllParticipants() {
         String[] participants = new String[1000]; // Max 1000 participants
         int count = 0;
-        Connection conn = DBConnection.getConnection();
+        Connection conn = JavaDatabaseConnectivity.getConnection();
         if (conn == null) return new String[0];
 
         String sql = "SELECT DISTINCT sender FROM chat_history " +
@@ -117,7 +109,7 @@ public class ChatHistory {
     public static String[][] getAllChatPairs() {
         String[][] pairs = new String[1000][2]; // Max 1000 pairs
         int count = 0;
-        Connection conn = DBConnection.getConnection();
+        Connection conn = JavaDatabaseConnectivity.getConnection();
         if (conn == null) return new String[0][0];
 
         String sql = "SELECT DISTINCT " +

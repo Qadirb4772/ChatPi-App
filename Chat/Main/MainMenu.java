@@ -11,9 +11,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.Connection;
 
-public class TestMain {
+public class MainMenu {
 
-    public TestMain(){
+    public MainMenu(){
 
         // ================ Verify DB CONNECTION ================
         Connection conn = DBConnection.getConnection();
@@ -25,7 +25,7 @@ public class TestMain {
         }
 
         // ================ SHOW MENU ===================
-        SwingUtilities.invokeLater(TestMain::showMain);
+        SwingUtilities.invokeLater(MainMenu::showMain);
     }
 
     // ================= MAIN MENU =================

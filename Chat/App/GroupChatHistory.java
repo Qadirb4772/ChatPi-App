@@ -1,6 +1,6 @@
 package Chat.App;
 
-import Chat.DB.DBConnection;
+import JDBC.JavaDatabaseConnectivity;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -11,7 +11,7 @@ public class GroupChatHistory {
 
     // ================= SAVE MESSAGE =================
     public static void saveMessage(String groupName, String sender, String message) {
-        Connection conn = DBConnection.getConnection();
+        Connection conn = JavaDatabaseConnectivity.getConnection();
         if (conn == null) return;
 
         String sql = "INSERT INTO group_chat_history " +
@@ -30,7 +30,7 @@ public class GroupChatHistory {
 
     // ================= GET GROUP HISTORY =================
     public static ResultSet getGroupHistory(String groupName) {
-        Connection conn = DBConnection.getConnection();
+        Connection conn = JavaDatabaseConnectivity.getConnection();
         if (conn == null) return null;
 
         String sql = "SELECT sender, message, sent_at " +
@@ -48,7 +48,7 @@ public class GroupChatHistory {
 
     // ================= GET ALL GROUPS =================
     public static ResultSet getAllGroups() {
-        Connection conn = DBConnection.getConnection();
+        Connection conn = JavaDatabaseConnectivity.getConnection();
         if (conn == null) return null;
 
         String sql = "SELECT DISTINCT group_name FROM group_chat_history ORDER BY group_name";

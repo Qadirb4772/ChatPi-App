@@ -12,10 +12,11 @@ public class DataRetrieval extends JavaDatabaseConnectivity{
         super();
     }
     
-    private static String query = "SELECT * FROM Users WHERE username = ?";
+    
     
     
     public static boolean getData(String username, int password){
+        String query = "SELECT * FROM Users WHERE username = ?";
         boolean isAvailable = false;
         Connection connection = JavaDatabaseConnectivity.getConnection();
         try {

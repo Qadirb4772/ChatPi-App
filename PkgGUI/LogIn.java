@@ -3,7 +3,7 @@ package PkgGUI;
 import javax.swing.*;
 import java.awt.*;
 import JDBC.DataRetrieval;
-// import Zafran.*;
+
 public class LogIn {
     private JFrame loginFrame = new JFrame("Log In");
     private JLabel logIn = new JLabel("Log In");
@@ -88,7 +88,7 @@ public class LogIn {
             boolean areCredentialsCorrect = DataRetrieval.getData(username, password);
             if(areCredentialsCorrect){
                 loginFrame.dispose();
-                new Chat.Main.TestMain();
+                new Chat.Main.MainMenu();
             }else{
                 JOptionPane.showMessageDialog(mainPanel, "Wrong Credentials", "Error", JOptionPane.ERROR_MESSAGE);
             }

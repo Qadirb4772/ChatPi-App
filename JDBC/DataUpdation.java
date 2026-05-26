@@ -28,8 +28,5 @@ public class DataUpdation extends JavaDatabaseConnectivity {
             JavaDatabaseConnectivity.closeConnection(connection);
         }
       return passwordUpdated;
-}
-
-
-
+    }
 }
